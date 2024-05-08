@@ -132,14 +132,56 @@ Esta función elimina el nodo node del árbol tree. Recuerde que para eliminar u
 
 void removeNode(TreeMap * tree, TreeNode* node)
 {
+  //nodo sin hijos
   if(node->left == NULL && node->right == NULL)
   {
-    if(node->parent->left == NULL)
+    if(node->parent == NULL)
     {
-      
+      tree->root = NULL;
     }
+    else if(node->parent->left == node)
+    {
+      node->parent->left = NULL;
+    }
+    else{
+      node->parent->right = NULL;
+    }
+    free(node);
   }
-
+  //nodo con un hijo
+  else if(node->left == NULL || node->right == NULL)
+  {
+    //forma abreviada de un if-else
+    TreeNode* child = (node->left != NULL) ? node->left : node->right; 
+    if(node->parent == NULL)
+    {
+      //nodo raiz con un solo hijo
+      tree->root = child;
+      child->parent = NULL;
+    }
+    else if(node->parent ->left == node)
+    {
+      //Nodo es hijo izquierdo
+      node->parent->left = child;
+      child->parent = node->parent;
+    }
+    else
+    {
+      //Nodo es hijo derecho
+      node->parent->right = child;
+      child->parent = node->parent;
+    }
+    free(node);
+  }
+  else
+  {
+    //nodo con dos hijos
+    TreeNode * sucesor = minimum(node->right);
+    //NODE->PAIR->KEY = SUCESOR->PAIR->KEY
+    //NODE->PAIR->VALUE = SUCESOR->PAIR->VALUE
+    node->pair = sucesor->pair;
+    removeNode(tree, sucesor);
+  }
 }
 
 void eraseTreeMap(TreeMap * tree, void* key){
