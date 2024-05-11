@@ -240,11 +240,7 @@ Pair * upperBound(TreeMap * tree, void* key)
   while(aux != NULL)
   {
     int cmpKeys = tree->lower_than(key, aux->pair->key);
-    if(cmpKeys == 0)
-    {
-      return aux->pair;
-    }
-    else if(cmpKeys < 0)
+    if(cmpKeys <= 0)
     {
       ubNode = aux;
       aux = aux->left;
