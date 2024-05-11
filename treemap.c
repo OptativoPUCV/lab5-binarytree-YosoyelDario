@@ -237,19 +237,22 @@ Pair * upperBound(TreeMap * tree, void* key)
   TreeNode* aux = tree->root;
   TreeNode* ubNode = NULL;
 
+  if(aux == NULL) return NULL;
   while(aux != NULL)
   {
     // lower_than, recibe dos parámetros (las claves) y retorna un entero (1 si key1<key2 y 0 si no).
+    // is_equal, función para saber si dos claves son iguales.
     int cmpKeys = tree->lower_than(key, aux->pair->key);
-    if(cmpKeys > 0)
+    if(is_equal(tree, key, aux->pair->key))
     {
-      aux = aux->right;
+      return aux->pair;
     }
-    else
-    {
+    else if(cmpKeys == 1){
       ubNode = aux;
       aux = aux->left;
-      break;
+    }
+    else{
+      aux = aux->right;
     }
   }    
   if(ubNode != NULL)
