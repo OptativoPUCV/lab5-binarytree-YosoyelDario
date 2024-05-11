@@ -249,6 +249,7 @@ Pair * upperBound(TreeMap * tree, void* key)
     {
       ubNode = aux;
       aux = aux->left;
+      break;
     }
   }    
   if(ubNode != NULL)
