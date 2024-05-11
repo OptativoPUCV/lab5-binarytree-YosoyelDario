@@ -244,7 +244,7 @@ Pair * firstTreeMap(TreeMap * tree)
   TreeNode* aux = tree->root;
   if(aux == NULL)
   {
-    return NULL;
+    return NULL; //Arbol vacio
   }
   while(aux->left != NULL)
   {
@@ -254,6 +254,39 @@ Pair * firstTreeMap(TreeMap * tree)
   return aux->pair;
 }
 
-Pair * nextTreeMap(TreeMap * tree) {
-    return NULL;
+Pair * nextTreeMap(TreeMap * tree)
+{
+  TreeNode* aux = tree->current;
+  if(aux == NULL)
+  {
+    return NULL; 
+  }
+  
+  // Si el nodo tiene un hijo derecho, el siguiente será el nodo más a la izquierda de ese subárbol
+  if(aux->right != NULL)
+  {
+    aux = aux->right;
+    while(aux->left != NULL)
+    {
+      aux = aux->left;
+    }
+  }
+  else
+  {
+    // Retroceder al nodo padre hasta encontrar un nodo que sea el hijo izquierdo de su padre
+    TreeNode * parent = aux->parent;
+    while(parent != NULL && aux == parent->right)
+    {
+      aux = parent;
+      parent = parent->parent;
+    }
+    aux = parent;
+  }
+  tree->current = aux; //Actualizar current del arbol
+  
+  if(aux != NULL)
+  {
+    return aux->pair;
+  }
+  else return NULL;
 }
