@@ -239,17 +239,18 @@ Pair * upperBound(TreeMap * tree, void* key)
 
   while(aux != NULL)
   {
+    // lower_than, recibe dos parámetros (las claves) y retorna un entero (1 si key1<key2 y 0 si no).
     int cmpKeys = tree->lower_than(key, aux->pair->key);
-    if(cmpKeys == 0 || cmpKeys > 0)
+    if(cmpKeys > 0)
+    {
+      aux = aux->right;
+    }
+    else
     {
       ubNode = aux;
       aux = aux->left;
     }
-    else
-    {
-      aux = aux->right;
-    }
-  }
+  }    
   if(ubNode != NULL)
   {
     return ubNode->pair;
@@ -257,7 +258,6 @@ Pair * upperBound(TreeMap * tree, void* key)
   else{
     return NULL;
   }
-  
 }
 
 /*
