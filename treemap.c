@@ -253,10 +253,12 @@ Pair * upperBound(TreeMap * tree, void* key)
       aux = aux->right;
     }
   }
-  if (ubNode != NULL)
+  if (ubNode != NULL){
     return ubNode->pair;
-  else 
+  }
+  else{ 
     return NULL;
+  }
 }
 
 /*
